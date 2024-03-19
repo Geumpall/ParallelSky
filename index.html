@@ -58,17 +58,20 @@
                 }, 1000); // 1초마다 시간 업데이트
 
                 // Fetch location name based on coordinates
-                getLocationName(randomLatitude, randomLongitude);
-    
+                getLocationName(randomLatitude, randomLongitude, function(locationName) {
+                    // Display location name at random coordinates
+                    const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
+                    locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
+                });
             } else {
                 console.error('Failed to fetch timezone data:', data.error_message);
             }
         })
         .catch(error => console.error('Error fetching timezone data:', error));
-    }
+}
 
-    // Function to fetch location name based on coordinates
-    function getLocationName(latitude, longitude) {
+// Function to fetch location name based on coordinates
+function getLocationName(latitude, longitude, callback) {
     const geocoder = new google.maps.Geocoder();
     const latLng = new google.maps.LatLng(latitude, longitude);
     
@@ -76,9 +79,7 @@
         if (status === 'OK') {
             if (results[0]) {
                 const locationName = results[0].formatted_address;
-                // Display location name at random coordinates
-                const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
-                locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
+                callback(locationName); // Call the callback function with the location name
             } else {
                 console.error('No results found');
             }
@@ -86,7 +87,7 @@
             console.error('Geocoder failed due to: ' + status);
         }
     });
-    }
+}
 
 
         // Function to display the user's current location and city
