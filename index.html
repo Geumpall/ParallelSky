@@ -99,6 +99,10 @@
                 currentTime.innerText = `${now.toLocaleTimeString()}`;
             }, 1000); // 1초마다 시간 업데이트
 
+            // Generate random coordinates and display time at that location
+            generateRandomCoordinatesAndTime();
+        }
+
         // Function to handle errors when getting the user's location
         function showError(error) {
             const locationText = document.getElementById('locationText');
