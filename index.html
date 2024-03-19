@@ -18,9 +18,10 @@
             <h2>Right half</h2>
             <p id="locationText">Getting your location...</p>
             <p id="currentTime">Current time: Loading...</p>
-            <p>This is the half</p>
+            <p>This is the right fuck half</p>
         </div>
     </div>
+    
     <script>
         // Function to generate random coordinates and display time at that location
         function generateRandomCoordinatesAndTime() {
@@ -32,7 +33,7 @@
             randomCoordinates.innerText = `Random coordinates: ${randomLatitude}, ${randomLongitude}`;
 
             // Get timezone at random coordinates
-            const timestamp = Date.now() / 1000;
+            const timestamp = Math.floor(new Date().getTime() / 1000);
             const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s`;
             fetch(timezoneUrl)
                 .then(response => response.json())
@@ -82,6 +83,7 @@
             const locationText = document.getElementById('locationText');
             locationText.innerText = "Geolocation is not supported by your browser";
         }
+    </script>
     </script>
 
 </body>
