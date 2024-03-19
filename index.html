@@ -26,6 +26,7 @@
     <script>
        // API 키를 상수에 저장
         const apiKey = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // 여기에 실제 API 키를 넣으세요
+        
 
         // Function to generate random coordinates and display time at that location
         function generateRandomCoordinatesAndTime() {
@@ -54,8 +55,12 @@
                             timeAtRandomLocation.innerText = `${timeAtLocation}`;
                         }, 1000); // 1초마다 시간 업데이트
 
-                        // Fetch location name based on coordinates and update location name
-                        getLocationName(randomLatitude, randomLongitude);
+                        // Fetch location name based on coordinates
+                        getLocationName(randomLatitude, randomLongitude, function(locationName) {
+                            // Display location name at random coordinates
+                            const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
+                            locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
+                        });
                     } else {
                         console.error('Failed to fetch timezone data:', data.error_message);
                     }
@@ -64,17 +69,15 @@
         }
 
         // Function to fetch location name based on coordinates
-        function getLocationName(latitude, longitude) {
+        function getLocationName(latitude, longitude, callback) {
             const geocoder = new google.maps.Geocoder();
             const latLng = new google.maps.LatLng(latitude, longitude);
-
+            
             geocoder.geocode({ 'location': latLng }, function(results, status) {
                 if (status === 'OK') {
                     if (results[0]) {
                         const locationName = results[0].formatted_address;
-                        // Update location name at random coordinates
-                        const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
-                        locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
+                        callback(locationName); // Call the callback function with the location name
                     } else {
                         console.error('No results found');
                     }
