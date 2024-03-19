@@ -30,7 +30,7 @@
 
             // Display random coordinates
             const randomCoordinates = document.getElementById('randomCoordinates');
-            randomCoordinates.innerText = `Random coordinates: ${randomLatitude}, ${randomLongitude}`;
+            randomCoordinates.innerText = `${randomLatitude}, ${randomLongitude}`;
 
             // Get timezone at random coordinates
             const timestamp = Math.floor(new Date().getTime() / 1000);
@@ -43,7 +43,7 @@
                         // Display time at random location
                         const timeAtRandomLocation = document.getElementById('timeAtRandomLocation');
                         const timeAtLocation = new Date(timestamp * 1000).toLocaleTimeString('en-US', {timeZone: timeZoneId});
-                        timeAtRandomLocation.innerText = `Time at random location: ${timeAtLocation}`;
+                        timeAtRandomLocation.innerText = `${timeAtLocation}`;
                     } else {
                         console.error('Failed to fetch timezone data:', data.error_message);
                     }
@@ -58,12 +58,12 @@
             
             // Display latitude and longitude
             const locationText = document.getElementById('locationText');
-            locationText.innerText = `Your current location: ${latitude}, ${longitude}`;
+            locationText.innerText = `${latitude}, ${longitude}`;
 
             // Display current time
             const currentTime = new Date();
             const currentTimeText = document.getElementById('currentTime');
-            currentTimeText.innerText = `Current time: ${currentTime.toLocaleTimeString()}`;
+            currentTimeText.innerText = `${currentTime.toLocaleTimeString()}`;
 
             // Generate random coordinates and display time at that location
             generateRandomCoordinatesAndTime();
