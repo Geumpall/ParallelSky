@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="left-half" id="leftHalf">
-            <p id="locationNameAtRandomLocation">Location at random coordinates: Loading...</p>
+            <p id="locationNameAtRandomLocation">Loading...</p>
             <p id="randomCoordinates">Loading...</p>
             <p id="timeAtRandomLocation">Loading...</p>
             <p>제발 뜨라고 제발제발..</p>
@@ -64,7 +64,7 @@
                         getLocationName(randomLatitude, randomLongitude, function(locationName) {
                             // Display location name at random coordinates
                             const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
-                            locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
+                            locationNameAtRandomLocation.innerText = locationName;
                         });
                     } else {
                         console.error('Failed to fetch timezone data:', data.error_message);
