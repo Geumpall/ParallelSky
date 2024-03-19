@@ -48,8 +48,11 @@
                 const timeZoneId = data.timeZoneId;
                 // Display time at random location
                 const timeAtRandomLocation = document.getElementById('timeAtRandomLocation');
-                const timeAtLocation = new Date(timestamp * 1000).toLocaleTimeString('en-US', {timeZone: timeZoneId});
-                timeAtRandomLocation.innerText = `${timeAtLocation}`;
+                setInterval(() => {
+                    const currentTime = new Date();
+                    const timeAtLocation = currentTime.toLocaleTimeString('en-US', {timeZone: timeZoneId});
+                    timeAtRandomLocation.innerText = `${timeAtLocation}`;
+                }, 1000); // 1초마다 시간 업데이트
             } else {
                 console.error('Failed to fetch timezone data:', data.error_message);
             }
@@ -68,9 +71,11 @@
             locationText.innerText = `${latitude}, ${longitude}`;
 
             // Display current time
-            const currentTime = new Date();
-            const currentTimeText = document.getElementById('currentTime');
-            currentTimeText.innerText = `${currentTime.toLocaleTimeString()}`;
+            const currentTime = document.getElementById('currentTime');
+            setInterval(() => {
+            const now = new Date();
+             currentTime.innerText = `Current time: ${now.toLocaleTimeString()}`;
+            }, 1000); // 1초마다 시간 업데이트
 
             // Generate random coordinates and display time at that location
             generateRandomCoordinatesAndTime();
