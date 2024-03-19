@@ -18,7 +18,7 @@
             <h2>Right half</h2>
             <p id="locationText">Getting your location...</p>
             <p id="currentTime">Current time: Loading...</p>
-            <p>This is the right half</p>
+            <p>This is the half</p>
         </div>
     </div>
     <script>
@@ -33,7 +33,7 @@
 
             // Get timezone at random coordinates
             const timestamp = Date.now() / 1000;
-            const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=`;
+            const timezoneUrl = 'https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s';
             fetch(timezoneUrl)
                 .then(response => response.json())
                 .then(data => {
