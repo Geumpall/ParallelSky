@@ -76,14 +76,24 @@
             geocoder.geocode({ 'location': latLng }, function(results, status) {
                 if (status === 'OK') {
                     if (results[0]) {
-                        const locationName = results[0].formatted_address;
-                        callback(locationName); // Call the callback function with the location name
-                    } else {
-                        console.error('No results found');
+                        const addressComponents = results[0].address_components;
+                        let address = '';
+                        for (let i = 0; i < addressComponents.length; i++) {
+                            if (addressComponents[i].types.includes('locality')) {
+                                address += addressComponents[i].long_name + ', ';
+                        } else if (addressComponents[i].types.includes('administrative_area_level_1')) {
+                            address += addressComponents[i].long_name + ', ';
+                        } else if (addressComponents[i].types.includes('country')) {
+                            address += addressComponents[i].long_name;
+                        }
                     }
+                    callback(address); // 콜백 함수를 호출하여 주소 전달
                 } else {
-                    console.error('Geocoder failed due to: ' + status);
+                    console.error('No results found');
                 }
+            } else {
+                console.error('Geocoder failed due to: ' + status);
+            }
             });
         }
 
