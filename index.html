@@ -59,17 +59,32 @@
                 // Fetch location name based on coordinates
                 getLocationName(randomLatitude, randomLongitude);
 
-                // Display location name at random coordinates
-                const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
-                locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
-
             } else {
                 console.error('Failed to fetch timezone data:', data.error_message);
             }
         })
         .catch(error => console.error('Error fetching timezone data:', error));
 }
-
+// Function to fetch location name based on coordinates
+function getLocationName(latitude, longitude) {
+    const geocoder = new google.maps.Geocoder();
+    const latLng = new google.maps.LatLng(latitude, longitude);
+    
+    geocoder.geocode({ 'location': latLng }, function(results, status) {
+        if (status === 'OK') {
+            if (results[0]) {
+                const locationName = results[0].formatted_address;
+                // Display location name at random coordinates
+                const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
+                locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
+            } else {
+                console.error('No results found');
+            }
+        } else {
+            console.error('Geocoder failed due to: ' + status);
+        }
+    });
+}
 
         // Function to display the user's current location and city
         function showLocation(position) {
