@@ -12,7 +12,6 @@
             <h2>Random Place</h2>
             <p id="randomCoordinates">Loading...</p>
             <p id="timeAtRandomLocation">Loading...</p>
-            <p id="locationNameAtRandomLocation">Location at random coordinates: Loading...</p>
             <p>제발 뜨라고 제발제발..</p>
         </div>
 
@@ -20,7 +19,6 @@
             <h2>User's location</h2>
             <p id="locationText">Getting your location...</p>
             <p id="currentTime">Current time: Loading...</p>
-            <p class="location-name">Location: </p>
             <p>This i</p>
         </div>
     </div>
@@ -55,14 +53,6 @@
                     const timeAtLocation = currentTime.toLocaleTimeString('en-US', {timeZone: timeZoneId});
                     timeAtRandomLocation.innerText = `${timeAtLocation}`;
                 }, 1000); // 1초마다 시간 업데이트
-
-                // Fetch location name based on coordinates
-                getLocationName(randomLatitude, randomLongitude);
-
-                // Display location name at random coordinates
-                const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
-                locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
-
             } else {
                 console.error('Failed to fetch timezone data:', data.error_message);
             }
