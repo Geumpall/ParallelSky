@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-half" id="leftHalf">
+            <h2>Left half</h2>
+            <p id="randomCoordinates">Random coordinates: Loading...</p>
+            <p id="timeAtRandomLocation">Time at random location: Loading...</p>
+        </div>
+
+        <div class="right-half" id="locationDisplay">
+            <h2>Right half</h2>
+            <p id="locationText">Getting your location...</p>
+            <p id="currentTime">Current time: Loading...</p>
+            <p>This is the right half</p>
+        </div>
+    </div>
+    <script>
+        // Function to generate random coordinates and display time at that location
+        function generateRandomCoordinatesAndTime() {
+            const randomLatitude = Math.random() * (90 - (-90)) + (-90);
+            const randomLongitude = Math.random() * (180 - (-180)) + (-180);
+
+            // Display random coordinates
+            const randomCoordinates = document.getElementById('randomCoordinates');
+            randomCoordinates.innerText = `Random coordinates: ${randomLatitude}, ${randomLongitude}`;
+
+            // Get timezone at random coordinates
+            const timestamp = Date.now() / 1000;
+            const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s`;
+            fetch(timezoneUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'OK') {
+                        const timeZoneId = data.timeZoneId;
+                        // Display time at random location
+                        const timeAtRandomLocation = document.getElementById('timeAtRandomLocation');
+                        const timeAtLocation = new Date(timestamp * 1000).toLocaleTimeString('en-US', {timeZone: timeZoneId});
+                        timeAtRandomLocation.innerText = `Time at random location: ${timeAtLocation}`;
+                    } else {
+                        console.error('Failed to fetch timezone data:', data.error_message);
+                    }
+                })
+                .catch(error => console.error('Error fetching timezone data:', error));
+        }
+
+        // Function to display the user's current location and city
+        function showLocation(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            
+            // Display latitude and longitude
+            const locationText = document.getElementById('locationText');
+            locationText.innerText = `Your current location: ${latitude}, ${longitude}`;
+
+            // Display current time
+            const currentTime = new Date();
+            const currentTimeText = document.getElementById('currentTime');
+            currentTimeText.innerText = `Current time: ${currentTime.toLocaleTimeString()}`;
+
+            // Generate random coordinates and display time at that location
+            generateRandomCoordinatesAndTime();
+        }
+
+        // Function to handle errors when getting the user's location
+        function showError(error) {
+            const locationText = document.getElementById('locationText');
+            locationText.innerText = `Unable to retrieve your location (${error.code}): ${error.message}`;
+        }
+
+        // Check if Geolocation is supported by the browser
+        if ("geolocation" in navigator) {
+            // Get the user's current location
+            navigator.geolocation.getCurrentPosition(showLocation, showError);
+        } else {
+            const locationText = document.getElementById('locationText');
+            locationText.innerText = "Geolocation is not supported by your browser";
+        }
+    </script>
+
+</body>
+</html>
