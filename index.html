@@ -9,19 +9,22 @@
 <body>
     <div class="container">
         <div class="left-half" id="leftHalf">
-            <h2>Random Place</h2>
+            <p id="locationNameAtRandomLocation">Location at random coordinates: Loading...</p>
             <p id="randomCoordinates">Loading...</p>
             <p id="timeAtRandomLocation">Loading...</p>
             <p>제발 뜨라고 제발제발..</p>
         </div>
 
         <div class="right-half" id="locationDisplay">
-            <h2>User's location</h2>
             <p id="locationText">Getting your location...</p>
             <p id="currentTime">Current time: Loading...</p>
             <p>This i</p>
         </div>
     </div>
+
+
+
+
     
     <script>
        // API 키를 상수에 저장
@@ -53,12 +56,37 @@
                     const timeAtLocation = currentTime.toLocaleTimeString('en-US', {timeZone: timeZoneId});
                     timeAtRandomLocation.innerText = `${timeAtLocation}`;
                 }, 1000); // 1초마다 시간 업데이트
+
+                // Fetch location name based on coordinates
+                getLocationName(randomLatitude, randomLongitude);
+    
             } else {
                 console.error('Failed to fetch timezone data:', data.error_message);
             }
         })
         .catch(error => console.error('Error fetching timezone data:', error));
-}
+    }
+
+    // Function to fetch location name based on coordinates
+    function getLocationName(latitude, longitude) {
+    const geocoder = new google.maps.Geocoder();
+    const latLng = new google.maps.LatLng(latitude, longitude);
+    
+    geocoder.geocode({ 'location': latLng }, function(results, status) {
+        if (status === 'OK') {
+            if (results[0]) {
+                const locationName = results[0].formatted_address;
+                // Display location name at random coordinates
+                const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
+                locationNameAtRandomLocation.innerText = "Location at random coordinates: " + locationName;
+            } else {
+                console.error('No results found');
+            }
+        } else {
+            console.error('Geocoder failed due to: ' + status);
+        }
+    });
+    }
 
 
         // Function to display the user's current location and city
