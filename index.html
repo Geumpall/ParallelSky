@@ -23,7 +23,7 @@
     </div>
     
     <script>
-        const apiKey = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding API 키
+        const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding API 키
 
         function generateRandomCoordinatesAndTime() {
             const randomLatitude = Math.random() * (90 - (-90)) + (-90);
@@ -34,7 +34,7 @@
 
             const timestamp = Math.floor(new Date().getTime() / 1000);
 
-            const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=${apiKey}`;
+            const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=${Api_Key}`;
             fetch(timezoneUrl)
                 .then(response => response.json())
                 .then(data => {
@@ -59,7 +59,7 @@
         }
 
         function getLocationName(latitude, longitude, callback) {
-            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`;
+            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Api_Key}`;
             
             fetch(geocodingUrl)
                 .then(response => response.json())
