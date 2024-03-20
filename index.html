@@ -21,7 +21,6 @@
             <p id="currentTime">Current time: Loading...</p>
         </div>
     </div>
-    
     <script>
         const apiKey = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding API 키
 
@@ -59,8 +58,8 @@
         }
 
         function getLocationName(latitude, longitude, callback) {
-            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`;
-            
+            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}&result_type=locality`;
+
             fetch(geocodingUrl)
                 .then(response => response.json())
                 .then(data => {
