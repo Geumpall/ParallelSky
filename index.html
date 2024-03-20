@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <!-- 비동기적으로 Google Maps JavaScript API를 로드 -->
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s&loading=async&v=weekly"></script>
 </head>
 <body>
     <div class="container">
@@ -18,47 +16,38 @@
         </div>
 
         <div class="right-half" id="locationDisplay">
-            <p id="userLocationName">Loading...</p>
-            <p id="locationText">Loading...</p>
-            <p id="currentTime">Loading...</p>
-            <p>This i</p>
+            <p id="locationText">Getting your location...</p>
+            <p id="userLocationName">Loading...</p> <!-- 사용자 위치의 주소를 표시할 요소 -->
+            <p id="currentTime">Current time: Loading...</p>
         </div>
     </div>
     
     <script>
-       // API 키를 상수에 저장
-        const apiKey = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // 여기에 실제 API 키를 넣으세요
+        const apiKey = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding API 키
 
-        // Function to generate random coordinates and display time at that location
         function generateRandomCoordinatesAndTime() {
             const randomLatitude = Math.random() * (90 - (-90)) + (-90);
             const randomLongitude = Math.random() * (180 - (-180)) + (-180);
 
-            // Display random coordinates
             const randomCoordinates = document.getElementById('randomCoordinates');
             randomCoordinates.innerText = `${randomLatitude}, ${randomLongitude}`;
 
-            // Get UTC timestamp in seconds
             const timestamp = Math.floor(new Date().getTime() / 1000);
 
-            // Fetch timezone data using API key stored in a variable
             const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=${apiKey}`;
             fetch(timezoneUrl)
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'OK') {
                         const timeZoneId = data.timeZoneId;
-                        // Display time at random location
                         const timeAtRandomLocation = document.getElementById('timeAtRandomLocation');
                         setInterval(() => {
                             const currentTime = new Date();
                             const timeAtLocation = currentTime.toLocaleTimeString('en-US', {timeZone: timeZoneId});
                             timeAtRandomLocation.innerText = `${timeAtLocation}`;
-                        }, 1000); // 1초마다 시간 업데이트
+                        }, 1000);
 
-                        // Fetch location name based on coordinates
                         getLocationName(randomLatitude, randomLongitude, function(locationName) {
-                            // Display location name at random coordinates
                             const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
                             locationNameAtRandomLocation.innerText = locationName;
                         });
@@ -69,70 +58,49 @@
                 .catch(error => console.error('Error fetching timezone data:', error));
         }
 
-        // Function to fetch location name based on coordinates
         function getLocationName(latitude, longitude, callback) {
-            const geocoder = new google.maps.Geocoder();
-            const latLng = new google.maps.LatLng(latitude, longitude);
+            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`;
             
-            geocoder.geocode({ 'location': latLng }, function(results, status) {
-                if (status === 'OK') {
-                    if (results[0]) {
-                        const addressComponents = results[0].address_components;
-                        let address = '';
-                        for (let i = 0; i < addressComponents.length; i++) {
-                            if (addressComponents[i].types.includes('locality')) {
-                                address += addressComponents[i].long_name + ', ';
-                            } else if (addressComponents[i].types.includes('administrative_area_level_1')) {
-                                address += addressComponents[i].long_name + ', ';
-                            } else if (addressComponents[i].types.includes('country')) {
-                                address += addressComponents[i].long_name;
-                            }
-                        }
-                        callback(address); // 콜백 함수를 호출하여 주소 전달
+            fetch(geocodingUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'OK') {
+                        const address = data.results[0].formatted_address;
+                        callback(address);
                     } else {
-                        console.error('No results found');
+                        console.error('Failed to fetch location data:', data.error_message);
                     }
-                } else {
-                    console.error('Geocoder failed due to: ' + status);
-                }
-            });
+                })
+                .catch(error => console.error('Error fetching location data:', error));
         }
 
-        // Function to display the user's current location and city
         function showLocation(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            
-            // Display latitude and longitude
+
             const locationText = document.getElementById('locationText');
             locationText.innerText = `${latitude},${longitude}`;
 
-            // Display user's location name
             getLocationName(latitude, longitude, function(locationName) {
                 const userLocationName = document.getElementById('userLocationName');
                 userLocationName.innerText = locationName;
             });
 
-            // Display current time
             const currentTime = document.getElementById('currentTime');
             setInterval(() => {
                 const now = new Date();
                 currentTime.innerText = `${now.toLocaleTimeString()}`;
-            }, 1000); // 1초마다 시간 업데이트
+            }, 1000);
 
-            // Generate random coordinates and display time at that location
             generateRandomCoordinatesAndTime();
         }
 
-        // Function to handle errors when getting the user's location
         function showError(error) {
             const locationText = document.getElementById('locationText');
             locationText.innerText = `Unable to retrieve your location (${error.code}): ${error.message}`;
         }
 
-        // Check if Geolocation is supported by the browser
         if ("geolocation" in navigator) {
-            // Get the user's current location
             navigator.geolocation.getCurrentPosition(showLocation, showError);
         } else {
             const locationText = document.getElementById('locationText');
