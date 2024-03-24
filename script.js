@@ -33,7 +33,7 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
 
             const timestamp = Math.floor(new Date().getTime() / 1000);
             
-            function getLocationName(latitude, longitude, callback) {
+            getLocationName(latitude, longitude, callback); {
                 const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Api_Key}`;
                 
                 fetch(geocodingUrl)
@@ -47,7 +47,7 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
                         }
                     })
                     .catch(error => console.error('Error fetching location data:', error));
-            }
+            };
         }
 
 
