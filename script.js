@@ -48,33 +48,34 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
                 })
                 .catch(error => console.error('Error fetching location data:', error));
         }
-
+        
         function showLocation(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-
+        
             const locationText = document.getElementById('locationText');
             locationText.innerText = `${latitude},${longitude}`;
-
-            getLocationName(latitude, longitude, function(getLocationName) {
+        
+            // Corrected parameter name from getLocationName to locationName
+            getLocationName(latitude, longitude, function(locationName) {
                 const userLocationName = document.getElementById('userLocationName');
                 userLocationName.innerText = locationName;
             });
-
+        
             const currentTime = document.getElementById('currentTime');
             setInterval(() => {
                 const now = new Date();
                 currentTime.innerText = `${now.toLocaleTimeString()}`;
             }, 1000);
-
+        
             generateRandomCoordinatesAndTime();
         }
-
+        
         function showError(error) {
             const locationText = document.getElementById('locationText');
             locationText.innerText = `Unable to retrieve your location (${error.code}): ${error.message}`;
         }
-
+        
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(showLocation, showError);
         } else {
