@@ -56,7 +56,7 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
             const locationText = document.getElementById('locationText');
             locationText.innerText = `${latitude},${longitude}`;
 
-            getLocationName(latitude, longitude, function(locationName) {
+            getLocationName(latitude, longitude, function(getLocationName) {
                 const userLocationName = document.getElementById('userLocationName');
                 userLocationName.innerText = locationName;
             });
