@@ -1,4 +1,4 @@
-const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding API 키
+const Api_Key = 'AIzaSyDUnv8unF8eyeWxNhfF37MAFUJ_2ipTeJQ'; // Google Geocoding API 키
 
         function generateRandomCoordinatesAndTime() {
             const randomLatitude = Math.random() * (90 - (-90)) + (-90);
@@ -9,7 +9,7 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
 
             const timestamp = Math.floor(new Date().getTime() / 1000);
 
-            const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?${randomLatitude},${randomLongitude}&${timestamp}&${Api_Key}`;
+            const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=${Api_Key}`;
             fetch(timezoneUrl)
                 .then(response => response.json())
                 .then(data => {
