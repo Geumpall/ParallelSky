@@ -1,4 +1,4 @@
-const Api_Key = 'AIzaSyDUnv8unF8eyeWxNhfF37MAFUJ_2ipTeJQ'; // Google Geocoding API 키
+const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding API 키
 
         function generateRandomCoordinatesAndTime() {
             const randomLatitude = Math.random() * (90 - (-90)) + (-90);
