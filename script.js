@@ -26,6 +26,7 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
                             const locationNameAtRandomLocation = document.getElementById('locationNameAtRandomLocation');
                             locationNameAtRandomLocation.innerText = locationName;
                         });
+
                     } else {
                         console.error('Failed to fetch timezone data:', data.error_message);
                     }
@@ -34,7 +35,7 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
         }
 
         function getLocationName(latitude, longitude, callback) {
-            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Api_Key}`;
+            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${randomlatitude},${randomlongitude}&key=${Api_Key}`;
             
             fetch(geocodingUrl)
                 .then(response => response.json())
