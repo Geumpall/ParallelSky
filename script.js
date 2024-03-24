@@ -32,24 +32,23 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
                 .catch(error => console.error('Error fetching timezone data:', error));
 
             const timestamp = Math.floor(new Date().getTime() / 1000);
-            
-            getLocationName(latitude, longitude, callback); {
-                const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Api_Key}`;
-                
-                fetch(geocodingUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'OK') {
-                            const address = data.results[0].formatted_address;
-                            callback(address);
-                        } else {
-                            console.error('Failed to fetch location data:', data.error_message);
-                        }
-                    })
-                    .catch(error => console.error('Error fetching location data:', error));
-            };
         }
 
+        function getLocationName(latitude, longitude, callback) {
+            const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${Api_Key}`;
+            
+            fetch(geocodingUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'OK') {
+                        const address = data.results[0].formatted_address;
+                        callback(address);
+                    } else {
+                        console.error('Failed to fetch location data:', data.error_message);
+                    }
+                })
+                .catch(error => console.error('Error fetching location data:', error));
+        }
 
         function showLocation(position) {
             const latitude = position.coords.latitude;
