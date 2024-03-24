@@ -9,7 +9,7 @@ const Api_Key = 'AIzaSyBcyfaAihhZ2sghktMI0qsaYxq6S9_Aq8s'; // Google Geocoding A
 
             const timestamp = Math.floor(new Date().getTime() / 1000);
 
-            const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${randomLatitude},${randomLongitude}&timestamp=${timestamp}&key=${Api_Key}`;
+            const timezoneUrl = `https://maps.googleapis.com/maps/api/timezone/json?${randomLatitude},${randomLongitude}&${timestamp}&${Api_Key}`;
             fetch(timezoneUrl)
                 .then(response => response.json())
                 .then(data => {
