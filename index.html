@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kor">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Parellel Sky</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Orbit&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div class="left-half" id="leftHalf">
-            <p id="locationNameAtRandomLocation">Loading...</p>
-            <p id="randomCoordinates">Loading...</p>
-            <p id="timeAtRandomLocation">Loading...</p>
-            <p>제발 뜨라고 제발제발..</p>
+        <div class="left-half" id="leftHalf" style="float:left;width:50%;cursor:pointer;" onclick="refreshLeftHalf()">
+            <p id="randomCoordinates" class="text">Loading...</p>
+            <p id="timeAtRandomLocation" class="text">Loading...</p>
+            <p id="locationNameAtRandomLocation" class="text">Loading...</p>
         </div>
 
         <div class="right-half" id="locationDisplay">
+            <p id="locationText">Loading...</p>
+            <p id="currentTime">Loading...</p>
             <p id="userLocationName">Loading...</p> <!-- 사용자 위치의 주소를 표시할 요소 -->
-            <p id="locationText">Getting your location...</p>
-            <p id="currentTime">Current time: Loading...</p>
         </div>
     </div>
+    
     
     <script defer src="script.js"></script>
 </body>
